@@ -649,22 +649,22 @@
     <h2 class="section-title">20人が2人になった。<br>次はあなたの会社の番。</h2>
     <p class="section-lead">まずは無料相談から。設備業界特化のプロが、あなたの課題に正面から向き合います。</p>
 
-    <div class="cta-form">
+    <form class="cta-form" action="https://formspree.io/f/xzdwwovy" method="POST">
       <div class="form-group">
         <label>お名前 *</label>
-        <input type="text" placeholder="山田 太郎">
+        <input type="text" name="name" placeholder="山田 太郎" required>
       </div>
       <div class="form-group">
         <label>会社名</label>
-        <input type="text" placeholder="株式会社〇〇設備">
+        <input type="text" name="company" placeholder="株式会社〇〇設備">
       </div>
       <div class="form-group">
         <label>メールアドレス *</label>
-        <input type="email" placeholder="taro@example.com">
+        <input type="email" name="email" placeholder="taro@example.com" required>
       </div>
       <div class="form-group">
         <label>ご興味のあるサービス</label>
-        <select>
+        <select name="service">
           <option value="">選択してください</option>
           <option>SNS×AI運用代行（月30〜50万円）</option>
           <option>AI業務効率化コンサル（月10〜30万円）</option>
@@ -675,11 +675,11 @@
       </div>
       <div class="form-group">
         <label>お問い合わせ内容</label>
-        <textarea placeholder="現在の課題や気になることを自由にお書きください。"></textarea>
+        <textarea name="message" placeholder="現在の課題や気になることを自由にお書きください。"></textarea>
       </div>
-      <button class="form-submit" type="button">無料相談を申し込む →</button>
+      <button class="form-submit" type="submit">無料相談を申し込む →</button>
       <p class="form-note">※ 返信は通常1〜2営業日以内。個人情報は厳重に管理します。</p>
-    </div>
+    </form>
   </div>
 </section>
 
