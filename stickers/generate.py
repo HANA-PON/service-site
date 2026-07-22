@@ -2,10 +2,10 @@
 """「〜ても、シリーズ」ステッカー入稿データ生成スクリプト
 
 SUZURI入稿用の透過PNG(2000x2000)を stickers/png/ に出力する。
-デザインはリッチ背景版: 各フレーズに合わせた情景イラストを
-グラデーション・光・影・紙のような粒子感つきで描き、生成りの
-薄いスクリムをかけて縦書き2列の言葉を重ねる。1枚ものなので
-カットラインは外周1本。
+デザインは分離レイアウト版: 生成りの角丸台座の上部に
+情景イラストの角丸窓、下部に横書き2行の言葉を置き、
+絵と文字を重ねない。イラストはスクリムなしの原色で見せる。
+1枚ものなのでカットラインは外周1本。
 フォント: Zen Maru Gothic Light (SIL Open Font License 1.1 / 商用利用可)
 
 使い方:
@@ -26,16 +26,21 @@ FONT_CACHE = os.path.join(os.path.dirname(__file__), "ZenMaruGothic-Light.ttf")
 CANVAS = 2000          # SUZURI推奨の大判サイズ
 COLOR = (66, 66, 68, 255)  # 濃いめのグレー1色(文字)
 
-BASE_SIZE = (1840, 1840)   # 角丸正方形(イラストを見せるため大きめ)
+BASE_SIZE = (1840, 1840)   # 角丸正方形の台座
 BASE_RADIUS = 140
+BASE_FILL = (247, 245, 240, 255)    # 生成り
 BASE_BORDER = (188, 184, 175, 255)
 BASE_BORDER_W = 8
-SCRIM = (247, 245, 240, 132)  # 文字を立たせる生成りの薄がけ
 
-PAD_Y = 170            # 上下端から文字までの最低余白
-MAX_FONT_SIZE = 240    # 短い句が間延びしないよう上限を設ける
-COL_GAP_EM = 1.60      # 右列と左列の中心間隔(フォントサイズ比)
-DROP_EM = 0.55         # 左列(2句目)を下げる量(句のリズム)
+PIC_SIZE = 1200        # 上部のイラスト窓(正方形)の一辺
+PIC_TOP = 150          # 台座上端からイラスト窓までの距離
+PIC_RADIUS = 60
+PIC_BORDER = (200, 195, 184, 255)
+PIC_BORDER_W = 6
+
+TEXT_MAX_WIDTH = 1520  # 下部の文字の最大幅
+MAX_FONT_SIZE = 168    # 文字ゾーンの高さに収まる上限
+LINE_SPACING = 1.30
 
 STICKERS = [
     ("01-kaettemo", "かえっても、かえりたい"),
@@ -310,25 +315,16 @@ def load_font(size):
 
 
 def split_lines(text):
-    # 読点で2句に割る。読点は1句目の末尾に残す(諦めの「間」を作る)
+    # 読点で2行に割る。読点は1行目の末尾に残す(諦めの「間」を作る)
     head, _, tail = text.partition("、")
     return [head + "、", tail]
 
 
-def column_height(draw, line, font):
-    box = draw.textbbox((0, 0), line, font=font, direction="ttb", anchor="mt")
-    return box[3] - box[1]
-
-
-def fit_font_size(draw, lines):
-    max_h = BASE_SIZE[1] - PAD_Y * 2
+def fit_font_size(lines):
     size = MAX_FONT_SIZE
     while size > 10:
         font = load_font(size)
-        drop = int(size * DROP_EM)
-        h1 = column_height(draw, lines[0], font)
-        h2 = column_height(draw, lines[1], font) + drop
-        if max(h1, h2) <= max_h:
+        if max(font.getbbox(line)[2] for line in lines) <= TEXT_MAX_WIDTH:
             return size
         size -= 4
     return size
@@ -336,62 +332,49 @@ def fit_font_size(draw, lines):
 
 def render(slug, text):
     lines = split_lines(text)
+    size = fit_font_size(lines)
+    font = load_font(size)
+
     bw, bh = BASE_SIZE
     bx, by = (CANVAS - bw) // 2, (CANVAS - bh) // 2
 
-    # 情景イラストを描いて質感を足し、角丸に切り抜く
-    scene = finish(SCENES[slug](bw).convert("RGB"), bw)
-    mask = Image.new("L", (bw, bh), 0)
-    ImageDraw.Draw(mask).rounded_rectangle((0, 0, bw, bh), BASE_RADIUS, fill=255)
-
     img = Image.new("RGBA", (CANVAS, CANVAS), (0, 0, 0, 0))
-    img.paste(scene, (bx, by), mask)
-
-    # 生成りのスクリム(文字の可読性を確保しつつイラストを透かす)
-    overlay = Image.new("RGBA", (CANVAS, CANVAS), (0, 0, 0, 0))
-    ImageDraw.Draw(overlay).rounded_rectangle(
-        (bx, by, bx + bw, by + bh), BASE_RADIUS, fill=SCRIM
+    draw = ImageDraw.Draw(img)
+    draw.rounded_rectangle(
+        (bx, by, bx + bw, by + bh),
+        radius=BASE_RADIUS,
+        fill=BASE_FILL,
+        outline=BASE_BORDER,
+        width=BASE_BORDER_W,
     )
-    img = Image.alpha_composite(img, overlay)
 
-    # 縦書き2列の言葉と枠線(透明レイヤーに描いてから合成)
-    top = Image.new("RGBA", (CANVAS, CANVAS), (0, 0, 0, 0))
-    d = ImageDraw.Draw(top)
-    size = fit_font_size(d, lines)
-    font = load_font(size)
-    drop = int(size * DROP_EM)
-    gap = int(size * COL_GAP_EM)
-    h1 = column_height(d, lines[0], font)
-    h2 = column_height(d, lines[1], font) + drop
-    y_top = (CANVAS - max(h1, h2)) // 2
-    # 文字の後ろにほんのり白を敷いて絵と喧嘩させない
-    halo = Image.new("RGBA", (CANVAS, CANVAS), (0, 0, 0, 0))
-    hd = ImageDraw.Draw(halo)
-    for dx in (-3, 0, 3):
-        for dy in (-3, 0, 3):
-            hd.text((CANVAS // 2 + gap // 2 + dx, y_top + dy), lines[0],
-                    font=font, fill=(247, 245, 240, 255), direction="ttb", anchor="mt")
-            hd.text((CANVAS // 2 - gap // 2 + dx, y_top + drop + dy), lines[1],
-                    font=font, fill=(247, 245, 240, 255), direction="ttb", anchor="mt")
-    halo = halo.filter(ImageFilter.GaussianBlur(6))
-    img = Image.alpha_composite(img, halo)
-    # 縦書きは右列から読むので、1句目を右・2句目を左に置く
-    d.text((CANVAS // 2 + gap // 2, y_top),
-           lines[0], font=font, fill=COLOR, direction="ttb", anchor="mt")
-    d.text((CANVAS // 2 - gap // 2, y_top + drop),
-           lines[1], font=font, fill=COLOR, direction="ttb", anchor="mt")
-    d.rounded_rectangle((bx, by, bx + bw, by + bh), BASE_RADIUS,
-                        outline=BASE_BORDER, width=BASE_BORDER_W)
-    img = Image.alpha_composite(img, top)
-
-    # 文字ハロのボカシが台座の外へ漏れた分を切り落とす
-    outer = Image.new("L", (CANVAS, CANVAS), 0)
-    ImageDraw.Draw(outer).rounded_rectangle(
-        (bx, by, bx + bw, by + bh), BASE_RADIUS, fill=255
+    # 上部: 情景イラストの角丸窓(文字とは重ねない)
+    scene = finish(SCENES[slug](bw).convert("RGB"), bw).resize(
+        (PIC_SIZE, PIC_SIZE), Image.LANCZOS
     )
-    r, g, b, a = img.split()
-    a = Image.composite(a, Image.new("L", (CANVAS, CANVAS), 0), outer)
-    img = Image.merge("RGBA", (r, g, b, a))
+    mask = Image.new("L", (PIC_SIZE, PIC_SIZE), 0)
+    ImageDraw.Draw(mask).rounded_rectangle(
+        (0, 0, PIC_SIZE, PIC_SIZE), PIC_RADIUS, fill=255
+    )
+    px = (CANVAS - PIC_SIZE) // 2
+    py = by + PIC_TOP
+    img.paste(scene, (px, py), mask)
+    draw.rounded_rectangle(
+        (px, py, px + PIC_SIZE, py + PIC_SIZE), PIC_RADIUS,
+        outline=PIC_BORDER, width=PIC_BORDER_W,
+    )
+
+    # 下部: 横書き2行の言葉(イラスト窓の下端と台座下端の中間に置く)
+    ascent, descent = font.getmetrics()
+    line_height = int((ascent + descent) * LINE_SPACING)
+    total_height = line_height * (len(lines) - 1) + ascent + descent
+    zone_top = py + PIC_SIZE
+    zone_bottom = by + bh - BASE_BORDER_W
+    y = zone_top + (zone_bottom - zone_top - total_height) // 2
+    for line in lines:
+        w = draw.textlength(line, font=font)
+        draw.text(((CANVAS - w) // 2, y), line, font=font, fill=COLOR)
+        y += line_height
 
     out_dir = os.path.join(os.path.dirname(__file__), "png")
     os.makedirs(out_dir, exist_ok=True)
