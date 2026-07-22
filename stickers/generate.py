@@ -2,14 +2,14 @@
 """「〜ても、シリーズ」ステッカー入稿データ生成スクリプト
 
 SUZURI入稿用の透過PNG(2000x2000)を stickers/png/ に出力する。
-デザインはマスキングテープ風: 1行=1本のテープ(両端ちぎれ)を上下に
-少し重ねて貼った見た目。重ねることでカットラインが1枚につながる。
+デザインは正方形の付箋風: 生成り色の正方形に右下の紙めくれ、
+全体をわずかに傾けて「手で貼った」感を出す。1枚ものなので
+カットラインは外周1本になる。
 フォント: Zen Maru Gothic Light (SIL Open Font License 1.1 / 商用利用可)
 
 使い方:
     python3 stickers/generate.py
 """
-import math
 import os
 import urllib.request
 
@@ -22,20 +22,19 @@ FONT_URL = (
 FONT_CACHE = os.path.join(os.path.dirname(__file__), "ZenMaruGothic-Light.ttf")
 
 CANVAS = 2000          # SUZURI推奨の大判サイズ
-MAX_LINE_WIDTH = 1380  # 文字の最大幅(テープの余白とちぎれ分を除く)
-MAX_FONT_SIZE = 280    # 短い行が間延びしないよう上限を設ける
 COLOR = (110, 110, 110, 255)  # グレー1色。色数を増やすと脱力が死ぬ
 
-TAPE_FILL = (243, 240, 232, 255)    # 生成り(マステの紙色)
-TAPE_BORDER = (208, 204, 194, 255)  # うっすら輪郭(白地で消えないように)
-TAPE_BORDER_W = 6
-TAPE_PAD_X = 110       # テープ端から文字までの余白
-TAPE_HEIGHT_EM = 1.55  # フォントサイズに対するテープの高さ
-TEAR_AMP = 26          # ちぎれのギザギザの深さ
-TEAR_TEETH = 6         # ギザギザの山の数
-OVERLAP_RATIO = 0.18   # 上下テープの重なり(切り離れないための連結部)
-LINE_OFFSET_X = 55     # 上下テープの左右ズレ(手で貼った感)
-ANGLES = (-1.3, 0.9)   # 上下テープの微妙な傾き(度)
+NOTE_SIZE = 1560       # 付箋の一辺
+NOTE_FILL = (245, 242, 234, 255)    # 生成り(付箋の紙色)
+NOTE_BORDER = (208, 204, 194, 255)  # うっすら輪郭(白地で消えないように)
+NOTE_BORDER_W = 6
+FOLD_SIZE = 250        # 右下の紙めくれの大きさ
+FOLD_FILL = (226, 222, 211, 255)    # めくれの裏面(本体よりやや暗い)
+NOTE_ANGLE = -1.6      # 全体の傾き(手で貼った感)
+
+PAD_X = 150            # 付箋の端から文字までの余白
+MAX_FONT_SIZE = 260    # 短い行が間延びしないよう上限を設ける
+LINE_SPACING = 1.35    # 行間(脱力感を出すためやや広め)
 
 STICKERS = [
     ("01-kaettemo", "かえっても、かえりたい"),
@@ -63,46 +62,43 @@ def split_lines(text):
 
 
 def fit_font_size(lines):
+    max_width = NOTE_SIZE - PAD_X * 2
     size = MAX_FONT_SIZE
     while size > 10:
         font = load_font(size)
-        if max(font.getbbox(line)[2] for line in lines) <= MAX_LINE_WIDTH:
+        if max(font.getbbox(line)[2] for line in lines) <= max_width:
             return size
         size -= 4
     return size
 
 
-def tear_edge(x_base, y_top, y_bottom, direction, phase):
-    """テープ端のちぎれ(ギザギザ)の頂点列を上から下へ返す"""
-    pts = []
-    steps = TEAR_TEETH * 2
-    for i in range(steps + 1):
-        y = y_top + (y_bottom - y_top) * i / steps
-        # 固定パターンの疑似乱数(再生成しても同じ形になる)
-        wob = math.sin(phase + i * 2.1) * 0.5 + 0.5
-        depth = TEAR_AMP * (0.35 + 0.65 * wob) if i % 2 else 0
-        pts.append((x_base + direction * depth, y))
-    return pts
-
-
-def tape_strip(line, font, size, phase):
-    """1行ぶんのテープ(ちぎれ両端)を透過レイヤーで返す"""
-    text_w = int(font.getbbox(line)[2])
-    strip_h = int(size * TAPE_HEIGHT_EM)
-    strip_w = text_w + TAPE_PAD_X * 2 + TEAR_AMP * 2
-    layer = Image.new("RGBA", (strip_w, strip_h), (0, 0, 0, 0))
+def fusen_note(lines, font):
+    """付箋(右下めくれつき)を透過レイヤーで返す"""
+    n = NOTE_SIZE
+    layer = Image.new("RGBA", (n, n), (0, 0, 0, 0))
     draw = ImageDraw.Draw(layer)
 
-    xl, xr = TEAR_AMP, strip_w - TEAR_AMP
-    yt, yb = TAPE_BORDER_W, strip_h - TAPE_BORDER_W
-    right = tear_edge(xr, yt, yb, +1, phase)
-    left = tear_edge(xl, yb, yt, -1, phase + 3.7)
-    poly = [(xl, yt), (xr, yt)] + right + [(xr, yb), (xl, yb)] + left
-    draw.polygon(poly, fill=TAPE_FILL, outline=TAPE_BORDER, width=TAPE_BORDER_W)
+    b = NOTE_BORDER_W
+    f = FOLD_SIZE
+    # 右下の角を三角に落とした本体
+    body = [
+        (b, b), (n - b, b),
+        (n - b, n - b - f), (n - b - f, n - b),
+        (b, n - b),
+    ]
+    draw.polygon(body, fill=NOTE_FILL, outline=NOTE_BORDER, width=b)
+    # めくれた紙の裏面
+    fold = [(n - b - f, n - b), (n - b, n - b - f), (n - b - f, n - b - f)]
+    draw.polygon(fold, fill=FOLD_FILL, outline=NOTE_BORDER, width=b)
 
     ascent, descent = font.getmetrics()
-    ty = (strip_h - ascent - descent) // 2
-    draw.text(((strip_w - text_w) // 2, ty), line, font=font, fill=COLOR)
+    line_height = int((ascent + descent) * LINE_SPACING)
+    total_height = line_height * (len(lines) - 1) + ascent + descent
+    y = (n - total_height) // 2
+    for line in lines:
+        w = draw.textlength(line, font=font)
+        draw.text(((n - w) // 2, y), line, font=font, fill=COLOR)
+        y += line_height
     return layer
 
 
@@ -111,24 +107,13 @@ def render(slug, text):
     size = fit_font_size(lines)
     font = load_font(size)
 
+    note = fusen_note(lines, font)
+    note = note.rotate(NOTE_ANGLE, expand=True, resample=Image.BICUBIC)
+
     img = Image.new("RGBA", (CANVAS, CANVAS), (0, 0, 0, 0))
-
-    strips = []
-    for i, line in enumerate(lines):
-        layer = tape_strip(line, font, size, phase=1.3 + i * 2.9)
-        layer = layer.rotate(ANGLES[i], expand=True, resample=Image.BICUBIC)
-        strips.append(layer)
-
-    strip_h = int(size * TAPE_HEIGHT_EM)
-    overlap = int(strip_h * OVERLAP_RATIO)
-    total_h = strips[0].height + strips[1].height - overlap - TEAR_AMP
-    top = (CANVAS - total_h) // 2
-    offsets = (-LINE_OFFSET_X, LINE_OFFSET_X)
-    y = top
-    for layer, dx in zip(strips, offsets):
-        x = (CANVAS - layer.width) // 2 + dx
-        img.alpha_composite(layer, (x, y))
-        y += layer.height - overlap
+    img.alpha_composite(
+        note, ((CANVAS - note.width) // 2, (CANVAS - note.height) // 2)
+    )
 
     # 回転補間で生じるごく薄いノイズ画素を落とす
     # (残すとSUZURI側のカットライン自動生成が誤検出しかねない)
@@ -148,7 +133,7 @@ def preview_sheet():
     cell = 640
     cols = 3
     rows = (len(STICKERS) + cols - 1) // cols
-    # ステッカーの輪郭(カットライン)が見えるよう、テープより暗い背景にする
+    # ステッカーの輪郭(カットライン)が見えるよう、付箋より暗い背景にする
     sheet = Image.new("RGB", (cell * cols, cell * rows), (206, 203, 197))
     out_dir = os.path.join(os.path.dirname(__file__), "png")
     for i, (slug, _) in enumerate(STICKERS):
