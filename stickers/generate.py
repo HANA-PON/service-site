@@ -20,10 +20,18 @@ FONT_URL = (
 FONT_CACHE = os.path.join(os.path.dirname(__file__), "ZenMaruGothic-Light.ttf")
 
 CANVAS = 2000          # SUZURI推奨の大判サイズ
-MAX_LINE_WIDTH = 1560  # 文字の最大幅(左右に余白を残す)
-MAX_FONT_SIZE = 340    # 短い行が間延びしないよう上限を設ける
+MAX_LINE_WIDTH = 1460  # 文字の最大幅(台座の内側に収める)
+MAX_FONT_SIZE = 300    # 短い行が間延びしないよう上限を設ける
 LINE_SPACING = 1.30    # 行間(脱力感を出すためやや広め)
 COLOR = (110, 110, 110, 255)  # グレー1色。色数を増やすと脱力が死ぬ
+
+# 台座: 文字だけの切り抜きだと小さいパーツが破片になるため、
+# 全種共通の角丸ベースを敷いて1枚もののステッカーにする
+BASE_SIZE = (1840, 1280)       # 横長の角丸長方形(シリーズ共通)
+BASE_RADIUS = 140
+BASE_FILL = (247, 245, 240, 255)    # 生成り(真っ白より脱力する)
+BASE_BORDER = (201, 197, 188, 255)  # うっすら枠線
+BASE_BORDER_W = 8
 
 STICKERS = [
     ("01-kaettemo", "かえっても、かえりたい"),
@@ -68,6 +76,16 @@ def render(slug, text):
     img = Image.new("RGBA", (CANVAS, CANVAS), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
 
+    bw, bh = BASE_SIZE
+    bx, by = (CANVAS - bw) // 2, (CANVAS - bh) // 2
+    draw.rounded_rectangle(
+        (bx, by, bx + bw, by + bh),
+        radius=BASE_RADIUS,
+        fill=BASE_FILL,
+        outline=BASE_BORDER,
+        width=BASE_BORDER_W,
+    )
+
     ascent, descent = font.getmetrics()
     line_height = int((ascent + descent) * LINE_SPACING)
     total_height = line_height * (len(lines) - 1) + ascent + descent
@@ -90,7 +108,8 @@ def preview_sheet():
     cell = 640
     cols = 3
     rows = (len(STICKERS) + cols - 1) // cols
-    sheet = Image.new("RGB", (cell * cols, cell * rows), (245, 244, 240))
+    # ステッカーの輪郭(カットライン)が見えるよう、台座より暗い背景にする
+    sheet = Image.new("RGB", (cell * cols, cell * rows), (206, 203, 197))
     out_dir = os.path.join(os.path.dirname(__file__), "png")
     for i, (slug, _) in enumerate(STICKERS):
         img = Image.open(os.path.join(out_dir, f"{slug}.png")).resize(
