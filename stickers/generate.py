@@ -2,8 +2,10 @@
 """「〜ても、シリーズ」ステッカー入稿データ生成スクリプト
 
 SUZURI入稿用の透過PNG(2000x2000)を stickers/png/ に出力する。
-デザインは角丸台座のくすみブルー版: 全種共通の角丸長方形ベースに
-2行組みの文字。1枚ものなのでカットラインは外周1本になる。
+デザインは縦書き版: 生成り色の縦長角丸台座に、右列→左列の
+2列組みで縦書き(左列は少し下げて句のリズムを作る)。
+縦書きの組版(句読点・拗促音の位置)はlibraqm+フォントの
+縦書き用グリフに任せる。1枚ものなのでカットラインは外周1本。
 フォント: Zen Maru Gothic Light (SIL Open Font License 1.1 / 商用利用可)
 
 使い方:
@@ -21,17 +23,19 @@ FONT_URL = (
 FONT_CACHE = os.path.join(os.path.dirname(__file__), "ZenMaruGothic-Light.ttf")
 
 CANVAS = 2000          # SUZURI推奨の大判サイズ
-MAX_LINE_WIDTH = 1460  # 文字の最大幅(台座の内側に収める)
-MAX_FONT_SIZE = 300    # 短い行が間延びしないよう上限を設ける
-LINE_SPACING = 1.30    # 行間(脱力感を出すためやや広め)
-COLOR = (88, 97, 110, 255)  # スレートグレー。ブルー台座に沈まない濃さにする
+COLOR = (74, 74, 74, 255)  # 濃いめのグレー1色
 
-# 台座: くすみブルーの角丸長方形(シリーズ共通)
-BASE_SIZE = (1840, 1280)
+# 台座: 生成りの縦長角丸長方形(シリーズ共通)
+BASE_SIZE = (1280, 1840)
 BASE_RADIUS = 140
-BASE_FILL = (178, 190, 202, 255)    # くすみブルー
-BASE_BORDER = (148, 160, 174, 255)  # うっすら枠線
+BASE_FILL = (247, 245, 240, 255)    # 生成り(真っ白より脱力する)
+BASE_BORDER = (201, 197, 188, 255)  # うっすら枠線
 BASE_BORDER_W = 8
+
+PAD_Y = 160            # 台座の上下端から文字までの最低余白
+MAX_FONT_SIZE = 240    # 短い句が間延びしないよう上限を設ける
+COL_GAP_EM = 1.60      # 右列と左列の中心間隔(フォントサイズ比)
+DROP_EM = 0.55         # 左列(2句目)を下げる量(句のリズム)
 
 STICKERS = [
     ("01-kaettemo", "かえっても、かえりたい"),
@@ -53,16 +57,25 @@ def load_font(size):
 
 
 def split_lines(text):
-    # 読点で2行に割る。読点は1行目の末尾に残す(諦めの「間」を作る)
+    # 読点で2句に割る。読点は1句目の末尾に残す(諦めの「間」を作る)
     head, _, tail = text.partition("、")
     return [head + "、", tail]
 
 
-def fit_font_size(lines):
+def column_height(draw, line, font):
+    box = draw.textbbox((0, 0), line, font=font, direction="ttb", anchor="mt")
+    return box[3] - box[1]
+
+
+def fit_font_size(draw, lines):
+    max_h = BASE_SIZE[1] - PAD_Y * 2
     size = MAX_FONT_SIZE
     while size > 10:
         font = load_font(size)
-        if max(font.getbbox(line)[2] for line in lines) <= MAX_LINE_WIDTH:
+        drop = int(size * DROP_EM)
+        h1 = column_height(draw, lines[0], font)
+        h2 = column_height(draw, lines[1], font) + drop
+        if max(h1, h2) <= max_h:
             return size
         size -= 4
     return size
@@ -70,11 +83,12 @@ def fit_font_size(lines):
 
 def render(slug, text):
     lines = split_lines(text)
-    size = fit_font_size(lines)
-    font = load_font(size)
 
     img = Image.new("RGBA", (CANVAS, CANVAS), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
+    size = fit_font_size(draw, lines)
+    font = load_font(size)
+    drop = int(size * DROP_EM)
 
     bw, bh = BASE_SIZE
     bx, by = (CANVAS - bw) // 2, (CANVAS - bh) // 2
@@ -86,15 +100,19 @@ def render(slug, text):
         width=BASE_BORDER_W,
     )
 
-    ascent, descent = font.getmetrics()
-    line_height = int((ascent + descent) * LINE_SPACING)
-    total_height = line_height * (len(lines) - 1) + ascent + descent
-    y = (CANVAS - total_height) // 2
-
-    for line in lines:
-        w = draw.textlength(line, font=font)
-        draw.text(((CANVAS - w) // 2, y), line, font=font, fill=COLOR)
-        y += line_height
+    # 縦書きは右列から読むので、1句目を右・2句目を左に置く
+    gap = int(size * COL_GAP_EM)
+    h1 = column_height(draw, lines[0], font)
+    h2 = column_height(draw, lines[1], font) + drop
+    y_top = (CANVAS - max(h1, h2)) // 2
+    draw.text(
+        (CANVAS // 2 + gap // 2, y_top),
+        lines[0], font=font, fill=COLOR, direction="ttb", anchor="mt",
+    )
+    draw.text(
+        (CANVAS // 2 - gap // 2, y_top + drop),
+        lines[1], font=font, fill=COLOR, direction="ttb", anchor="mt",
+    )
 
     out_dir = os.path.join(os.path.dirname(__file__), "png")
     os.makedirs(out_dir, exist_ok=True)
@@ -109,7 +127,7 @@ def preview_sheet():
     cols = 3
     rows = (len(STICKERS) + cols - 1) // cols
     # ステッカーの輪郭(カットライン)が見えるよう、台座より暗い背景にする
-    sheet = Image.new("RGB", (cell * cols, cell * rows), (222, 220, 215))
+    sheet = Image.new("RGB", (cell * cols, cell * rows), (206, 203, 197))
     out_dir = os.path.join(os.path.dirname(__file__), "png")
     for i, (slug, _) in enumerate(STICKERS):
         img = Image.open(os.path.join(out_dir, f"{slug}.png")).resize(
