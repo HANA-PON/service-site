@@ -87,14 +87,9 @@
     .card-img {
       width: 100%;
       aspect-ratio: 4 / 3;
+      object-fit: cover;
       background: var(--bg);
-      border: 1px dashed var(--line);
       border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--muted);
-      font-size: .85rem;
       margin-bottom: 20px;
     }
     .card p { margin-bottom: 1em; }
@@ -148,8 +143,9 @@
 <body>
 
   <!-- ══════════════════════════════════════════════════
-       メモ：アフィリエイトリンクは3商品とも設定済み。
-       残作業：.card-img のプレースホルダーを商品写真に差し替える。
+       メモ：アフィリエイトリンク・商品写真とも設定済み。
+       写真はAI生成のイメージ画像（外部CDN参照）。
+       差し替えたい場合は img タグの src を変更する。
      ══════════════════════════════════════════════════ -->
 
   <section class="hero">
@@ -171,7 +167,7 @@
       <article class="card">
         <div class="card-no">Pick 01</div>
         <h2>Shoji-Style Paper Floor Lamp — Soft Light, Instant Calm</h2>
-        <div class="card-img">[ Product photo ]</div>
+        <img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3F96eeo9XAsKr1hKiGRAmYtuQcI/hf_20260724_074754_0c9e4479-dee6-4118-b208-a127d217a118.png" alt="Japanese shoji-style paper floor lamp glowing warmly in a calm japandi bedroom corner" loading="lazy">
         <p>In Japan, we soften light instead of turning it up. A shoji-style lamp glows through washi-like paper, giving the whole room a warm, low evening light — the single fastest way to make a space feel zen. Place it in a corner, switch off the ceiling light, and the room changes completely.</p>
         <a class="btn" href="https://amzn.to/4pyQQLb" rel="nofollow sponsored" target="_blank">Check Price on Amazon&nbsp;&rarr;</a>
       </article>
@@ -180,7 +176,7 @@
       <article class="card">
         <div class="card-no">Pick 02</div>
         <h2>Noren Curtain — The Japanese Doorway Divider</h2>
-        <div class="card-img">[ Product photo ]</div>
+        <img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3F96eeo9XAsKr1hKiGRAmYtuQcI/hf_20260724_074758_a5944921-e360-41af-8779-c6c03d3b0cdb.png" alt="Indigo blue Japanese noren split curtain hanging in a bright japandi doorway" loading="lazy">
         <p>A noren is the split fabric curtain you see at the entrance of every Japanese shop and home. It divides a space gently — without walls or doors — and adds texture and a touch of tradition. Hang one in a hallway, a closet opening, or over a kitchen doorway for an instant Japanese feel.</p>
         <a class="btn" href="https://amzn.to/4wlGscw" rel="nofollow sponsored" target="_blank">Check Price on Amazon&nbsp;&rarr;</a>
       </article>
@@ -189,7 +185,7 @@
       <article class="card">
         <div class="card-no">Pick 03</div>
         <h2>Low Floor Table &amp; Cushion Set — Live a Little Lower</h2>
-        <div class="card-img">[ Product photo ]</div>
+        <img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3F96eeo9XAsKr1hKiGRAmYtuQcI/hf_20260724_074800_34aa9e22-c22c-4e65-a3fe-ab90c0bda758.png" alt="Low wooden Japanese floor table with beige zabuton cushions in a japandi living room" loading="lazy">
         <p>The heart of a Japanese room is the low table. Tea, laptop work, dinner with friends — everything happens closer to the floor, and somehow it makes the whole room feel bigger and slower. Pair a low table with floor cushions (zabuton) and you have a cozy corner that guests always ask about.</p>
         <a class="btn" href="https://amzn.to/4wpO5P2" rel="nofollow sponsored" target="_blank">Check Price on Amazon&nbsp;&rarr;</a>
       </article>
