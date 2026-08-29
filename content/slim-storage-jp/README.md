@@ -28,7 +28,39 @@ Pinterest → ブログLP → Amazon の導線用データ一式。
 `pinterest_schedule.ics` と `schedule_30days.csv` を正として **2026-08-28 開始**で振り直した。
 現在は3ファイルの pin_no・日付・タイトルが一致している。
 
+## LPとピンのリンク先URL
+LP本体は `docs/jp/`（GitHub Pagesの公開元が `main / docs` のため、URLは `/jp/` 配下）。
+文面を直したいときは `build_lp.py` の `ARTICLES` を編集して再実行する：
+
+```
+python3 content/slim-storage-jp/build_lp.py
+```
+
+| ピンのblog_slug | 商品 | ピンに貼るURL |
+|---|---|---|
+| `slim-storage-1` | SPACEKEEPER 22cm 4段 | https://hana-pon.github.io/service-site/jp/slim-storage-1.html |
+| `slim-storage-2` | TKUIN 13cm 耐荷重32kg | https://hana-pon.github.io/service-site/jp/slim-storage-2.html |
+| `slim-storage-3` | Roweida 13cm 木天板 | https://hana-pon.github.io/service-site/jp/slim-storage-3.html |
+| `slim-storage-4` | アイリスオーヤマ 24cm | https://hana-pon.github.io/service-site/jp/slim-storage-4.html |
+| `slim-storage-5` | ぼん家具 20cm 木製 | https://hana-pon.github.io/service-site/jp/slim-storage-5.html |
+| `slim-storage-6` | 山崎実業 tower 13cm | https://hana-pon.github.io/service-site/jp/slim-storage-6.html |
+| `slim-storage-7` | 山崎実業 tower 洗面台横 | https://hana-pon.github.io/service-site/jp/slim-storage-7.html |
+| `slim-storage-8` | JEJアステージ 17cm 5段 | https://hana-pon.github.io/service-site/jp/slim-storage-8.html |
+| `slim-storage-9` | 天馬 スキピタ 17cm 140cm | https://hana-pon.github.io/service-site/jp/slim-storage-9.html |
+| `slim-storage-10` | SVOHZAV 18cm 4段 | https://hana-pon.github.io/service-site/jp/slim-storage-10.html |
+
+## 元データから直したもう2点
+1. `slim-storage-10` のタイトル「1000円台から！〜」は**価格表記**にあたるため、
+   「コスパで選ぶ隙間ワゴン｜18cm4段なら最初の1台にちょうどいい」に差し替えた
+   （このCSV自身の `affiliate_note` が「価格表記NG」と指定しているため）
+2. H2「実際に置いてみたサイズ感レビュー」は、未使用の商品について実体験を書くことになるため、
+   「サイズの合わせ方｜買う前に測る3か所」に変更し、公表スペックと採寸の話として書いた。
+   実際に購入して使ったら、体験談に書き換えるとページの説得力が上がる
+
 ## 未完了
-- [ ] LP 10本（`slim-storage-1` 〜 `-10`）の作成
-- [ ] 各LPへのAmazonアフィリリンク設定（SiteStripeで取得したものを差し替え）
+- [x] LP 10本（`slim-storage-1` 〜 `-10`）の作成 → `docs/jp/`
+- [x] 記事一覧ページ → `docs/jp/index.html`
+- [ ] 各LPへのAmazonアフィリリンク設定（SiteStripeで取得したものを `href="#"` と差し替え）
+- [ ] 商品イメージ写真10枚（今はプレースホルダー枠）
 - [ ] ピン画像30枚の作成（Canva一括作成 or AI生成）
+- [ ] Amazonアソシエイト・ジャパンの登録（日本のAmazon商品のため、米国アソシエイトIDでは報酬が出ない）
