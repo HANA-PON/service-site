@@ -109,6 +109,18 @@ def build():
                 "action": "投稿", "blog_url": BASE_URL + p["slug"] + ".html",
             })
 
+    # 投稿用早見表：1行に、その1枚を出すのに必要なものを全部並べる
+    sheet = [{
+        "pin_no": p["pin_no"], "投稿日": p["post_date"], "時刻": p["post_time_JST"],
+        "ボード": p["board"],
+        "画像ファイル": f'pin-{p["pin_no"]:02d}-{p["blog_slug"]}-{p["template"][0]}.png',
+        "タイトル": p["title"], "説明文": p["description"], "リンク先": p["blog_url"],
+    } for p in pins]
+    with io.open(HERE / "投稿用早見表.tsv", "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=list(sheet[0].keys()), delimiter="\t")
+        w.writeheader(); w.writerows(sheet)
+    print(f"投稿用早見表.tsv: {len(sheet)}行")
+
     for name, rows in (("pinterest_30pins.csv", pins),
                        ("canva_bulk_30pins.csv", canva),
                        ("schedule_30days.csv", sched)):

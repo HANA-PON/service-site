@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="p:domain_verify" content="76b98bcf2847d663e1bc4067be4a20bd"/>
+<meta name="robots" content="noindex">
+<title>ピン投稿ダッシュボード | すきま収納ノート</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#F5F6F4;--card:#fff;--ink:#35393B;--charcoal:#26292B;
+      --accent:#6E8A94;--accent-dk:#566E77;--line:#E1E2DE;--muted:#767A78}
+body{font-family:'Hiragino Sans','Noto Sans JP','Yu Gothic',Meiryo,sans-serif;
+     background:var(--bg);color:var(--ink);line-height:1.75;font-size:15px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px 64px}
+header{text-align:center;padding:44px 20px 30px;border-bottom:1px solid var(--line);
+       margin-bottom:28px}
+h1{font-size:1.5rem;font-weight:700;color:var(--charcoal);margin-bottom:10px}
+header p{color:var(--muted);font-size:.92rem}
+.how{background:var(--card);border:1px solid var(--line);border-radius:8px;
+     padding:20px 24px;margin-bottom:30px;font-size:.92rem}
+.how b{color:var(--charcoal)}
+.how ol{margin:10px 0 0 1.3em}.how li{margin-bottom:4px}
+.warn{color:#8C4A3F;font-weight:700}
+.day{font-size:1.02rem;font-weight:700;color:var(--charcoal);
+     margin:34px 0 14px;padding-left:12px;border-left:4px solid var(--accent)}
+.pin{background:var(--card);border:1px solid var(--line);border-radius:8px;
+     padding:18px;margin-bottom:16px;display:flex;gap:20px;align-items:flex-start}
+.pin img{width:150px;flex-shrink:0;border-radius:5px;border:1px solid var(--line)}
+.meta{flex:1;min-width:0}
+.tags{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px;
+      font-size:.8rem;color:var(--muted)}
+.chip{background:var(--bg);border:1px solid var(--line);border-radius:999px;
+      padding:3px 12px}
+.chip.time{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:700}
+.row{margin-bottom:9px}
+.lbl{font-size:.74rem;letter-spacing:.08em;color:var(--muted);display:block;
+     margin-bottom:2px}
+.val{word-break:break-all}
+button{font:inherit;font-size:.78rem;background:var(--accent);color:#fff;border:0;
+       border-radius:5px;padding:5px 13px;cursor:pointer;margin-left:6px;
+       vertical-align:middle;white-space:nowrap}
+button:hover{background:var(--accent-dk)}
+button.done{background:#5B7A55}
+a.dl{display:inline-block;margin-top:8px;font-size:.8rem;color:var(--accent-dk)}
+footer{text-align:center;color:var(--muted);font-size:.8rem;padding:30px 20px}
+@media(max-width:640px){.pin{flex-direction:column}.pin img{width:120px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>ピン投稿ダッシュボード</h1>
+  <p>30枚ぶんの画像・タイトル・説明文・リンク先をまとめたページです。<br>
+     zipを開かず、ここから直接コピーして投稿できます。</p>
+</header>
+<div class="wrap">
+  <div class="how">
+    <b>投稿のしかた</b>
+    <ol>
+      <li>画像を右クリック →「画像を保存」（または「画像をダウンロード」リンク）</li>
+      <li>Pinterestで「＋」→「ピンを作成」→ 保存した画像をアップロード</li>
+      <li>タイトル・説明文・<b>リンク先</b>を、下のコピーボタンで貼り付ける</li>
+      <li>「ボード」の欄に書いてあるボードを選んで公開</li>
+    </ol>
+    <p style="margin-top:10px"><span class="warn">リンク先を空欄のまま公開しないでください。</span>
+       ここが空だと、見てもらってもブログに来てもらえず、収益になりません。</p>
+    <p style="margin-top:6px">自分のピンは自分でクリックしないでください（数字が狂います）。
+       確認は別のブラウザかスマホで。</p>
+  </div>
+<div class="day">2026-08-28（3枚）</div>
+      <div class="pin">
+        <img src="pin-01-slim-storage-1-A.png" alt="ピン1のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#1</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t1">冷蔵庫横の22cmが収納庫に変わった｜SPACEKEEPER 22cm 4段</span>
+            <button onclick="cp(this,'t1')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d1">冷蔵庫横の使えていなかった22cmに置いたら、床置きの調味料が消えた。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #隙間収納 #キッチン収納 #一人暮らし</span>
+            <button onclick="cp(this,'d1')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u1">https://hana-pon.github.io/service-site/jp/slim-storage-1.html</span>
+            <button onclick="cp(this,'u1')">コピー</button></div>
+          <a class="dl" href="pin-01-slim-storage-1-A.png" download>画像をダウンロード（pin-01-slim-storage-1-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-02-slim-storage-1-B.png" alt="ピン2のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#2</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t2">22cmの隙間に置けるSPACEKEEPER 22cm 4段｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t2')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d2">SPACEKEEPER 22cm 4段（22cm）を冷蔵庫横に。4段で調味料もストックも分けられるのが決め手でした。買う前に測る3か所もブログに書いています→ #隙間収納 #キッチン収納 #一人暮らし</span>
+            <button onclick="cp(this,'d2')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u2">https://hana-pon.github.io/service-site/jp/slim-storage-1.html</span>
+            <button onclick="cp(this,'u2')">コピー</button></div>
+          <a class="dl" href="pin-02-slim-storage-1-B.png" download>画像をダウンロード（pin-02-slim-storage-1-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-03-slim-storage-1-C.png" alt="ピン3のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#3</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t3">この22cm、ずっと諦めてた｜22cmで冷蔵庫横を片付ける</span>
+            <button onclick="cp(this,'t3')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d3">この22cm、ずっと諦めてた——冷蔵庫横の22cmは、まだ使えます。4段で調味料もストックも分けられる。賃貸でもそのまま置けます。詳しくはブログで→ #隙間収納 #キッチン収納 #一人暮らし</span>
+            <button onclick="cp(this,'d3')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u3">https://hana-pon.github.io/service-site/jp/slim-storage-1.html</span>
+            <button onclick="cp(this,'u3')">コピー</button></div>
+          <a class="dl" href="pin-03-slim-storage-1-C.png" download>画像をダウンロード（pin-03-slim-storage-1-C.png）</a>
+        </div>
+      </div><div class="day">2026-08-29（3枚）</div>
+      <div class="pin">
+        <img src="pin-04-slim-storage-2-A.png" alt="ピン4のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#4</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t4">トイレの横の13cmが収納庫に変わった｜山崎実業 スリムトイレラック</span>
+            <button onclick="cp(this,'t4')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d4">トイレの横の使えていなかった13cmに置いたら、床のストックがゼロになった。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #トイレ収納 #隙間収納 #賃貸暮らし</span>
+            <button onclick="cp(this,'d4')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u4">https://hana-pon.github.io/service-site/jp/slim-storage-2.html</span>
+            <button onclick="cp(this,'u4')">コピー</button></div>
+          <a class="dl" href="pin-04-slim-storage-2-A.png" download>画像をダウンロード（pin-04-slim-storage-2-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-05-slim-storage-2-B.png" alt="ピン5のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#5</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t5">13cmの隙間に置ける山崎実業 スリムトイレラック｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t5')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d5">山崎実業 スリムトイレラック（13cm）をトイレの横に。奥行きを使って縦に積めるのが決め手でした。買う前に測る3か所もブログに書いています→ #トイレ収納 #隙間収納 #賃貸暮らし</span>
+            <button onclick="cp(this,'d5')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u5">https://hana-pon.github.io/service-site/jp/slim-storage-2.html</span>
+            <button onclick="cp(this,'u5')">コピー</button></div>
+          <a class="dl" href="pin-05-slim-storage-2-B.png" download>画像をダウンロード（pin-05-slim-storage-2-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-06-slim-storage-2-C.png" alt="ピン6のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#6</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t6">トイレの13cm、使えます｜13cmでトイレの横を片付ける</span>
+            <button onclick="cp(this,'t6')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d6">トイレの13cm、使えます——トイレの横の13cmは、まだ使えます。奥行きを使って縦に積める。賃貸でもそのまま置けます。詳しくはブログで→ #トイレ収納 #隙間収納 #賃貸暮らし</span>
+            <button onclick="cp(this,'d6')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u6">https://hana-pon.github.io/service-site/jp/slim-storage-2.html</span>
+            <button onclick="cp(this,'u6')">コピー</button></div>
+          <a class="dl" href="pin-06-slim-storage-2-C.png" download>画像をダウンロード（pin-06-slim-storage-2-C.png）</a>
+        </div>
+      </div><div class="day">2026-08-30（3枚）</div>
+      <div class="pin">
+        <img src="pin-07-slim-storage-3-A.png" alt="ピン7のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#7</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t7">冷蔵庫横の13cmが収納庫に変わった｜TORIBIO 13cm 5段 天板付き</span>
+            <button onclick="cp(this,'t7')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d7">冷蔵庫横の使えていなかった13cmに置いたら、キッチンがカフェっぽくなった。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #キッチン収納 #隙間収納 #インテリア</span>
+            <button onclick="cp(this,'d7')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u7">https://hana-pon.github.io/service-site/jp/slim-storage-3.html</span>
+            <button onclick="cp(this,'u7')">コピー</button></div>
+          <a class="dl" href="pin-07-slim-storage-3-A.png" download>画像をダウンロード（pin-07-slim-storage-3-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-08-slim-storage-3-B.png" alt="ピン8のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#8</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t8">13cmの隙間に置けるTORIBIO 13cm 5段 天板付き｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t8')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d8">TORIBIO 13cm 5段 天板付き（13cm）を冷蔵庫横に。木の天板だけ見せる場所にできるのが決め手でした。買う前に測る3か所もブログに書いています→ #キッチン収納 #隙間収納 #インテリア</span>
+            <button onclick="cp(this,'d8')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u8">https://hana-pon.github.io/service-site/jp/slim-storage-3.html</span>
+            <button onclick="cp(this,'u8')">コピー</button></div>
+          <a class="dl" href="pin-08-slim-storage-3-B.png" download>画像をダウンロード（pin-08-slim-storage-3-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-09-slim-storage-3-C.png" alt="ピン9のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#9</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t9">収納なのに、部屋が良くなる｜13cmで冷蔵庫横を片付ける</span>
+            <button onclick="cp(this,'t9')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d9">収納なのに、部屋が良くなる——冷蔵庫横の13cmは、まだ使えます。木の天板だけ見せる場所にできる。賃貸でもそのまま置けます。詳しくはブログで→ #キッチン収納 #隙間収納 #インテリア</span>
+            <button onclick="cp(this,'d9')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u9">https://hana-pon.github.io/service-site/jp/slim-storage-3.html</span>
+            <button onclick="cp(this,'u9')">コピー</button></div>
+          <a class="dl" href="pin-09-slim-storage-3-C.png" download>画像をダウンロード（pin-09-slim-storage-3-C.png）</a>
+        </div>
+      </div><div class="day">2026-08-31（3枚）</div>
+      <div class="pin">
+        <img src="pin-10-slim-storage-4-A.png" alt="ピン10のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#10</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t10">洗濯機の横の24cmが収納庫に変わった｜アイリスオーヤマ 天板付きワゴン</span>
+            <button onclick="cp(this,'t10')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d10">洗濯機の横の使えていなかった24cmに置いたら、洗剤とタオルに住所ができた。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #洗面所収納 #ランドリー収納 #隙間収納</span>
+            <button onclick="cp(this,'d10')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u10">https://hana-pon.github.io/service-site/jp/slim-storage-4.html</span>
+            <button onclick="cp(this,'u10')">コピー</button></div>
+          <a class="dl" href="pin-10-slim-storage-4-A.png" download>画像をダウンロード（pin-10-slim-storage-4-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-11-slim-storage-4-B.png" alt="ピン11のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#11</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t11">24cmの隙間に置けるアイリスオーヤマ 天板付きワゴン｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t11')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d11">アイリスオーヤマ 天板付きワゴン（24cm）を洗濯機の横に。天板に洗剤を出したまま置けるのが決め手でした。買う前に測る3か所もブログに書いています→ #洗面所収納 #ランドリー収納 #隙間収納</span>
+            <button onclick="cp(this,'d11')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u11">https://hana-pon.github.io/service-site/jp/slim-storage-4.html</span>
+            <button onclick="cp(this,'u11')">コピー</button></div>
+          <a class="dl" href="pin-11-slim-storage-4-B.png" download>画像をダウンロード（pin-11-slim-storage-4-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-12-slim-storage-4-C.png" alt="ピン12のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#12</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t12">洗面所の床置き、やめられます｜24cmで洗濯機の横を片付ける</span>
+            <button onclick="cp(this,'t12')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d12">洗面所の床置き、やめられます——洗濯機の横の24cmは、まだ使えます。天板に洗剤を出したまま置ける。賃貸でもそのまま置けます。詳しくはブログで→ #洗面所収納 #ランドリー収納 #隙間収納</span>
+            <button onclick="cp(this,'d12')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u12">https://hana-pon.github.io/service-site/jp/slim-storage-4.html</span>
+            <button onclick="cp(this,'u12')">コピー</button></div>
+          <a class="dl" href="pin-12-slim-storage-4-C.png" download>画像をダウンロード（pin-12-slim-storage-4-C.png）</a>
+        </div>
+      </div><div class="day">2026-09-01（3枚）</div>
+      <div class="pin">
+        <img src="pin-13-slim-storage-5-A.png" alt="ピン13のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#13</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t13">押入れの中の20cmが収納庫に変わった｜ぼん家具 木製ワゴン</span>
+            <button onclick="cp(this,'t13')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d13">押入れの中の使えていなかった20cmに置いたら、奥の物に手が届くようになった。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #押入れ収納 #クローゼット収納 #収納アイデア</span>
+            <button onclick="cp(this,'d13')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u13">https://hana-pon.github.io/service-site/jp/slim-storage-5.html</span>
+            <button onclick="cp(this,'u13')">コピー</button></div>
+          <a class="dl" href="pin-13-slim-storage-5-A.png" download>画像をダウンロード（pin-13-slim-storage-5-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-14-slim-storage-5-B.png" alt="ピン14のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#14</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t14">20cmの隙間に置けるぼん家具 木製ワゴン｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t14')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d14">ぼん家具 木製ワゴン（20cm）を押入れの中に。キャスターで手前に引き出せるのが決め手でした。買う前に測る3か所もブログに書いています→ #押入れ収納 #クローゼット収納 #収納アイデア</span>
+            <button onclick="cp(this,'d14')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u14">https://hana-pon.github.io/service-site/jp/slim-storage-5.html</span>
+            <button onclick="cp(this,'u14')">コピー</button></div>
+          <a class="dl" href="pin-14-slim-storage-5-B.png" download>画像をダウンロード（pin-14-slim-storage-5-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-15-slim-storage-5-C.png" alt="ピン15のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#15</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t15">押入れの奥、死んでませんか｜20cmで押入れの中を片付ける</span>
+            <button onclick="cp(this,'t15')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d15">押入れの奥、死んでませんか——押入れの中の20cmは、まだ使えます。キャスターで手前に引き出せる。賃貸でもそのまま置けます。詳しくはブログで→ #押入れ収納 #クローゼット収納 #収納アイデア</span>
+            <button onclick="cp(this,'d15')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u15">https://hana-pon.github.io/service-site/jp/slim-storage-5.html</span>
+            <button onclick="cp(this,'u15')">コピー</button></div>
+          <a class="dl" href="pin-15-slim-storage-5-C.png" download>画像をダウンロード（pin-15-slim-storage-5-C.png）</a>
+        </div>
+      </div><div class="day">2026-09-02（3枚）</div>
+      <div class="pin">
+        <img src="pin-16-slim-storage-6-A.png" alt="ピン16のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#16</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t16">キッチンの隙間の13cmが収納庫に変わった｜山崎実業 tower スリムワゴン</span>
+            <button onclick="cp(this,'t16')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d16">キッチンの隙間の使えていなかった13cmに置いたら、物が増えたのに散らかって見えない。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #tower #山崎実業 #隙間収納</span>
+            <button onclick="cp(this,'d16')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u16">https://hana-pon.github.io/service-site/jp/slim-storage-6.html</span>
+            <button onclick="cp(this,'u16')">コピー</button></div>
+          <a class="dl" href="pin-16-slim-storage-6-A.png" download>画像をダウンロード（pin-16-slim-storage-6-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-17-slim-storage-6-B.png" alt="ピン17のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#17</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t17">13cmの隙間に置ける山崎実業 tower スリムワゴン｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t17')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d17">山崎実業 tower スリムワゴン（13cm）をキッチンの隙間に。本体完成品でキャスターを付けるだけのが決め手でした。買う前に測る3か所もブログに書いています→ #tower #山崎実業 #隙間収納</span>
+            <button onclick="cp(this,'d17')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u17">https://hana-pon.github.io/service-site/jp/slim-storage-6.html</span>
+            <button onclick="cp(this,'u17')">コピー</button></div>
+          <a class="dl" href="pin-17-slim-storage-6-B.png" download>画像をダウンロード（pin-17-slim-storage-6-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-18-slim-storage-6-C.png" alt="ピン18のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#18</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t18">置いても部屋がうるさくならない｜13cmでキッチンの隙間を片付ける</span>
+            <button onclick="cp(this,'t18')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d18">置いても部屋がうるさくならない——キッチンの隙間の13cmは、まだ使えます。本体完成品でキャスターを付けるだけ。賃貸でもそのまま置けます。詳しくはブログで→ #tower #山崎実業 #隙間収納</span>
+            <button onclick="cp(this,'d18')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u18">https://hana-pon.github.io/service-site/jp/slim-storage-6.html</span>
+            <button onclick="cp(this,'u18')">コピー</button></div>
+          <a class="dl" href="pin-18-slim-storage-6-C.png" download>画像をダウンロード（pin-18-slim-storage-6-C.png）</a>
+        </div>
+      </div><div class="day">2026-09-03（3枚）</div>
+      <div class="pin">
+        <img src="pin-19-slim-storage-7-A.png" alt="ピン19のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#19</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t19">洗面台の横の12cmが収納庫に変わった｜Goowin スリムワゴン</span>
+            <button onclick="cp(this,'t19')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d19">洗面台の横の使えていなかった12cmに置いたら、朝の身支度が1分短くなった。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #洗面所収納 #美容収納 #隙間収納</span>
+            <button onclick="cp(this,'d19')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u19">https://hana-pon.github.io/service-site/jp/slim-storage-7.html</span>
+            <button onclick="cp(this,'u19')">コピー</button></div>
+          <a class="dl" href="pin-19-slim-storage-7-A.png" download>画像をダウンロード（pin-19-slim-storage-7-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-20-slim-storage-7-B.png" alt="ピン20のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#20</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t20">12cmの隙間に置けるGoowin スリムワゴン｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t20')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d20">Goowin スリムワゴン（12cm）を洗面台の横に。スキンケアを段ごとに分けられるのが決め手でした。買う前に測る3か所もブログに書いています→ #洗面所収納 #美容収納 #隙間収納</span>
+            <button onclick="cp(this,'d20')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u20">https://hana-pon.github.io/service-site/jp/slim-storage-7.html</span>
+            <button onclick="cp(this,'u20')">コピー</button></div>
+          <a class="dl" href="pin-20-slim-storage-7-B.png" download>画像をダウンロード（pin-20-slim-storage-7-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-21-slim-storage-7-C.png" alt="ピン21のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#21</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t21">洗面台の上、何も置かない日｜12cmで洗面台の横を片付ける</span>
+            <button onclick="cp(this,'t21')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d21">洗面台の上、何も置かない日——洗面台の横の12cmは、まだ使えます。スキンケアを段ごとに分けられる。賃貸でもそのまま置けます。詳しくはブログで→ #洗面所収納 #美容収納 #隙間収納</span>
+            <button onclick="cp(this,'d21')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u21">https://hana-pon.github.io/service-site/jp/slim-storage-7.html</span>
+            <button onclick="cp(this,'u21')">コピー</button></div>
+          <a class="dl" href="pin-21-slim-storage-7-C.png" download>画像をダウンロード（pin-21-slim-storage-7-C.png）</a>
+        </div>
+      </div><div class="day">2026-09-04（3枚）</div>
+      <div class="pin">
+        <img src="pin-22-slim-storage-8-A.png" alt="ピン22のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#22</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t22">キッチンの隙間の17cmが収納庫に変わった｜JEJ スリムチェスト 5段</span>
+            <button onclick="cp(this,'t22')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d22">キッチンの隙間の使えていなかった17cmに置いたら、届いたその日に片付いた。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #日本製 #隙間収納 #一人暮らし</span>
+            <button onclick="cp(this,'d22')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u22">https://hana-pon.github.io/service-site/jp/slim-storage-8.html</span>
+            <button onclick="cp(this,'u22')">コピー</button></div>
+          <a class="dl" href="pin-22-slim-storage-8-A.png" download>画像をダウンロード（pin-22-slim-storage-8-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-23-slim-storage-8-B.png" alt="ピン23のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#23</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t23">17cmの隙間に置けるJEJ スリムチェスト 5段｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t23')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d23">JEJ スリムチェスト 5段（17cm）をキッチンの隙間に。日本製の完成品・工具いらずのが決め手でした。買う前に測る3か所もブログに書いています→ #日本製 #隙間収納 #一人暮らし</span>
+            <button onclick="cp(this,'d23')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u23">https://hana-pon.github.io/service-site/jp/slim-storage-8.html</span>
+            <button onclick="cp(this,'u23')">コピー</button></div>
+          <a class="dl" href="pin-23-slim-storage-8-B.png" download>画像をダウンロード（pin-23-slim-storage-8-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-24-slim-storage-8-C.png" alt="ピン24のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#24</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t24">組み立てが苦手でも大丈夫｜17cmでキッチンの隙間を片付ける</span>
+            <button onclick="cp(this,'t24')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d24">組み立てが苦手でも大丈夫——キッチンの隙間の17cmは、まだ使えます。日本製の完成品・工具いらず。賃貸でもそのまま置けます。詳しくはブログで→ #日本製 #隙間収納 #一人暮らし</span>
+            <button onclick="cp(this,'d24')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u24">https://hana-pon.github.io/service-site/jp/slim-storage-8.html</span>
+            <button onclick="cp(this,'u24')">コピー</button></div>
+          <a class="dl" href="pin-24-slim-storage-8-C.png" download>画像をダウンロード（pin-24-slim-storage-8-C.png）</a>
+        </div>
+      </div><div class="day">2026-09-05（3枚）</div>
+      <div class="pin">
+        <img src="pin-25-slim-storage-9-A.png" alt="ピン25のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#25</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t25">キッチン・洗面所の17cm×140cmが収納庫に変わった｜天馬 スキピタ 5段</span>
+            <button onclick="cp(this,'t25')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d25">キッチン・洗面所の使えていなかった17cm×140cmに置いたら、同じ床面積で収納が倍になった。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #縦収納 #隙間収納 #6畳</span>
+            <button onclick="cp(this,'d25')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u25">https://hana-pon.github.io/service-site/jp/slim-storage-9.html</span>
+            <button onclick="cp(this,'u25')">コピー</button></div>
+          <a class="dl" href="pin-25-slim-storage-9-A.png" download>画像をダウンロード（pin-25-slim-storage-9-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-26-slim-storage-9-B.png" alt="ピン26のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#26</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t26">17cm×140cmの隙間に置ける天馬 スキピタ 5段｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t26')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d26">天馬 スキピタ 5段（17cm×140cm）をキッチン・洗面所に。幅17cmのまま高さ140cmまで使えるのが決め手でした。買う前に測る3か所もブログに書いています→ #縦収納 #隙間収納 #6畳</span>
+            <button onclick="cp(this,'d26')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u26">https://hana-pon.github.io/service-site/jp/slim-storage-9.html</span>
+            <button onclick="cp(this,'u26')">コピー</button></div>
+          <a class="dl" href="pin-26-slim-storage-9-B.png" download>画像をダウンロード（pin-26-slim-storage-9-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-27-slim-storage-9-C.png" alt="ピン27のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#27</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t27">床は増やさず、収納だけ増やす｜17cm×140cmでキッチン・洗面所を片付ける</span>
+            <button onclick="cp(this,'t27')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d27">床は増やさず、収納だけ増やす——キッチン・洗面所の17cm×140cmは、まだ使えます。幅17cmのまま高さ140cmまで使える。賃貸でもそのまま置けます。詳しくはブログで→ #縦収納 #隙間収納 #6畳</span>
+            <button onclick="cp(this,'d27')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u27">https://hana-pon.github.io/service-site/jp/slim-storage-9.html</span>
+            <button onclick="cp(this,'u27')">コピー</button></div>
+          <a class="dl" href="pin-27-slim-storage-9-C.png" download>画像をダウンロード（pin-27-slim-storage-9-C.png）</a>
+        </div>
+      </div><div class="day">2026-09-06（3枚）</div>
+      <div class="pin">
+        <img src="pin-28-slim-storage-10-A.png" alt="ピン28のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:00</span>
+            <span class="chip">6畳ワンルーム収納アイデア</span>
+            <span class="chip">A Before/After</span>
+            <span>#28</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t28">洗面所・トイレの18cmが収納庫に変わった｜SVOHZAV スリムワゴン 4段</span>
+            <button onclick="cp(this,'t28')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d28">洗面所・トイレの使えていなかった18cmに置いたら、この隙間が使えると分かった。賃貸OK・穴あけ不要です。サイズの測り方と設置のコツはブログにまとめました→ #隙間収納 #収納アイデア #賃貸OK</span>
+            <button onclick="cp(this,'d28')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u28">https://hana-pon.github.io/service-site/jp/slim-storage-10.html</span>
+            <button onclick="cp(this,'u28')">コピー</button></div>
+          <a class="dl" href="pin-28-slim-storage-10-A.png" download>画像をダウンロード（pin-28-slim-storage-10-A.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-29-slim-storage-10-B.png" alt="ピン29のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">21:30</span>
+            <span class="chip">賃貸OK！穴あけ不要収納</span>
+            <span class="chip">B 5選まとめ</span>
+            <span>#29</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t29">18cmの隙間に置けるSVOHZAV スリムワゴン 4段｜狭い部屋の収納アイデア</span>
+            <button onclick="cp(this,'t29')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d29">SVOHZAV スリムワゴン 4段（18cm）を洗面所・トイレに。よくある18cm幅・別の部屋にも回せるのが決め手でした。買う前に測る3か所もブログに書いています→ #隙間収納 #収納アイデア #賃貸OK</span>
+            <button onclick="cp(this,'d29')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u29">https://hana-pon.github.io/service-site/jp/slim-storage-10.html</span>
+            <button onclick="cp(this,'u29')">コピー</button></div>
+          <a class="dl" href="pin-29-slim-storage-10-B.png" download>画像をダウンロード（pin-29-slim-storage-10-B.png）</a>
+        </div>
+      </div>
+      <div class="pin">
+        <img src="pin-30-slim-storage-10-C.png" alt="ピン30のプレビュー" loading="lazy">
+        <div class="meta">
+          <div class="tags">
+            <span class="chip time">22:00</span>
+            <span class="chip">隙間を活用する神家具5選</span>
+            <span class="chip">C 悩み解決</span>
+            <span>#30</span>
+          </div>
+          <div class="row"><span class="lbl">タイトル</span>
+            <span class="val" id="t30">まず1台、試してみる｜18cmで洗面所・トイレを片付ける</span>
+            <button onclick="cp(this,'t30')">コピー</button></div>
+          <div class="row"><span class="lbl">説明文</span>
+            <span class="val" id="d30">まず1台、試してみる——洗面所・トイレの18cmは、まだ使えます。よくある18cm幅・別の部屋にも回せる。賃貸でもそのまま置けます。詳しくはブログで→ #隙間収納 #収納アイデア #賃貸OK</span>
+            <button onclick="cp(this,'d30')">コピー</button></div>
+          <div class="row"><span class="lbl">リンク先（必ず入れる）</span>
+            <span class="val" id="u30">https://hana-pon.github.io/service-site/jp/slim-storage-10.html</span>
+            <button onclick="cp(this,'u30')">コピー</button></div>
+          <a class="dl" href="pin-30-slim-storage-10-C.png" download>画像をダウンロード（pin-30-slim-storage-10-C.png）</a>
+        </div>
+      </div>
+</div>
+<footer>1日3枚・21:00 / 21:30 / 22:00 JST ・ すきま収納ノート</footer>
+<script>
+function cp(btn,id){
+  const t=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(t).then(()=>{
+    const o=btn.textContent;btn.textContent='コピーしました';btn.classList.add('done');
+    setTimeout(()=>{btn.textContent=o;btn.classList.remove('done')},1400);
+  });
+}
+</script>
+</body>
+</html>
