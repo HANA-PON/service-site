@@ -62,7 +62,10 @@
     }
     .card-img {
       width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; margin-bottom: 20px;
-      background: var(--bg); border: 1px dashed var(--line);
+      background: var(--bg); display: block; object-fit: cover;
+    }
+    div.card-img {
+      border: 1px dashed var(--line);
       display: flex; align-items: center; justify-content: center;
       color: var(--muted); font-size: .82rem; text-align: center; padding: 16px;
     }
@@ -117,11 +120,10 @@
       <article class="card">
         <div class="card-no">今回の1台</div>
         <h2>押入れの奥行きを、引き出して使う</h2>
-        <div class="card-img">［ここに商品イメージ写真を入れる：押入れの中に収まった木製のキャスター付きスリムワゴン］</div>
+        <img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3F96eeo9XAsKr1hKiGRAmYtuQcI/hf_20260830_043808_02fddfdf-30d0-447b-bfc7-45055e8de58e.png" alt="押入れの中に収まった木製のキャスター付きスリムワゴン" loading="lazy" width="1200" height="896">
         <p>キャスター付きの20cm木製ワゴン。押入れの奥に入れても手前に引き出せるので、これまで死蔵していた奥のスペースがそのまま使えるようになります。布団の脇の細い縦空間にも収まります。</p>
-        <a class="btn" href="#" rel="nofollow sponsored" target="_blank">Amazonで詳細を見る&nbsp;&rarr;</a>
-        <span class="btn-note">【ここにAmazonのアフィリリンクを貼る】<br>
-        SiteStripeで「ぼん家具 隙間収納 20cm 木製 キャスター」を検索して短縮リンクを取得し、上の href="#" と差し替えてください。</span>
+        <a class="btn" href="https://www.amazon.co.jp/dp/B09J4KFYH9?tag=slimstorage-22" rel="nofollow sponsored" target="_blank">Amazonで詳細を見る&nbsp;&rarr;</a>
+        <span class="btn-note">サイズ・仕様は商品ページの最新の表記をご確認ください。</span>
       </article>
 
       <h2>サイズの合わせ方｜買う前に測る3か所</h2>
