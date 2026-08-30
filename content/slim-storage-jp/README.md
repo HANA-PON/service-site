@@ -57,12 +57,30 @@ python3 content/slim-storage-jp/build_lp.py
    「サイズの合わせ方｜買う前に測る3か所」に変更し、公表スペックと採寸の話として書いた。
    実際に購入して使ったら、体験談に書き換えるとページの説得力が上がる
 
+## ピン画像（pins/）
+30枚を `build_pin_images.py` で生成している（1000×1500px）。
+文言を直すときは `build_pins.py` の `PRODUCTS` を編集して、次の順で再実行する：
+
+```
+python3 content/slim-storage-jp/build_pins.py        # 文章とCSVを作り直す
+python3 content/slim-storage-jp/build_pin_images.py  # 画像30枚を作り直す
+```
+
+ファイル名は `pin-<番号>-<記事スラッグ>-<A|B|C>.png`。投稿時は
+`pinterest_30pins.csv` の同じ pin_no の行から、タイトル・説明文・
+リンク先URL（blog_url）・ボードをコピーする。
+
+商品写真は入れていない（Amazonの商品画像は転載できず、生成した写真は
+このリポジトリの外にあるため）。写真入りにしたい場合は
+`canva_bulk_30pins.csv` をCanvaの「一括作成」に読み込み、
+LPで使っている写真を背景に敷く。
+
 ## 未完了
 - [x] LP 10本（`slim-storage-1` 〜 `-10`）の作成 → `docs/jp/`
 - [x] 記事一覧ページ → `docs/jp/index.html`
 - [ ] 各LPへのAmazonアフィリリンク設定（SiteStripeで取得したものを `href="#"` と差し替え）
 - [ ] 商品イメージ写真10枚（今はプレースホルダー枠）
-- [ ] ピン画像30枚の作成（Canva一括作成 or AI生成）
+- [x] ピン画像30枚の作成 → `pins/`
 - [ ] Amazonアソシエイト・ジャパンの登録（日本のAmazon商品のため、米国アソシエイトIDでは報酬が出ない）
 
 ## Amazonアソシエイト・ジャパン 申請までの順番

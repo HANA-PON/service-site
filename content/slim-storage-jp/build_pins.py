@@ -100,7 +100,7 @@ def build():
             })
             canva.append({
                 "Title": t["title"], "Product": p["name"], "Template": template,
-                "Size": p["size"], "OverlayTop": t["overlay_top"],
+                "Size": p["size"], "Place": p["place"], "OverlayTop": t["overlay_top"],
                 "OverlayMain": t["overlay_main"], "CTA": CTA, "Desc": t["desc"],
             })
             sched.append({
