@@ -62,7 +62,10 @@
     }
     .card-img {
       width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; margin-bottom: 20px;
-      background: var(--bg); border: 1px dashed var(--line);
+      background: var(--bg); display: block; object-fit: cover;
+    }
+    div.card-img {
+      border: 1px dashed var(--line);
       display: flex; align-items: center; justify-content: center;
       color: var(--muted); font-size: .82rem; text-align: center; padding: 16px;
     }
@@ -117,7 +120,7 @@
       <article class="card">
         <div class="card-no">今回の1台</div>
         <h2>22cmの隙間が、そのまま収納庫になる</h2>
-        <div class="card-img">［ここに商品イメージ写真を入れる：キッチンの冷蔵庫横の隙間に収まったスリムな4段ワゴン］</div>
+        <img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3F96eeo9XAsKr1hKiGRAmYtuQcI/hf_20260830_043517_64ad0067-f421-4ccc-ba17-69d6c33cb7c7.png" alt="キッチンの冷蔵庫横の隙間に収まったスリムな4段ワゴン" loading="lazy" width="1200" height="896">
         <p>冷蔵庫横・シンク横の「使えていない22cm」に差し込むタイプのスリムワゴン。4段で用途別に分けられて、引き出せば奥の物にも手が届きます。床置きの物が減ると、キッチンは一気に広く見えます。</p>
         <a class="btn" href="https://www.amazon.co.jp/dp/B09WMXTWRR?tag=slimstorage-22" rel="nofollow sponsored" target="_blank">Amazonで詳細を見る&nbsp;&rarr;</a>
         <span class="btn-note">サイズ・仕様は商品ページの最新の表記をご確認ください。</span>

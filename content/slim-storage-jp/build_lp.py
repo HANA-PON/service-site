@@ -286,6 +286,21 @@ ARTICLES = {
 }
 
 # 元データからの修正：価格を含むタイトルは規約（価格表記NG）に反するため差し替える。
+IMAGE_BASE = "https://d8j0ntlcm91z4.cloudfront.net/user_3F96eeo9XAsKr1hKiGRAmYtuQcI/"
+# 記事スラッグ -> 商品イメージ写真（AI生成）。空ならプレースホルダー枠を出す。
+IMAGES = {
+    "slim-storage-1": "hf_20260830_043517_64ad0067-f421-4ccc-ba17-69d6c33cb7c7.png",
+    "slim-storage-2": "hf_20260830_043559_15f7ef94-5afd-4cde-b718-ea5b41f16a0e.png",
+    "slim-storage-3": "hf_20260830_043640_3c08e7bc-11a7-490a-85ed-08eaf07e3246.png",
+    "slim-storage-4": "hf_20260830_043731_8ed409f6-1b4b-459c-a0de-baf72e39d450.png",
+    "slim-storage-5": "hf_20260830_043808_02fddfdf-30d0-447b-bfc7-45055e8de58e.png",
+    "slim-storage-6": "hf_20260830_043851_72b9d949-25d2-45c9-999c-3b523e073929.png",
+    "slim-storage-7": "hf_20260830_043930_8b56e5a0-1b97-4d8d-b8ac-eba8f141be42.png",
+    "slim-storage-8": "hf_20260830_044005_36dfdb21-535d-499c-91a1-d0c379037803.png",
+    "slim-storage-9": "hf_20260830_044043_fa37f0f3-3d3e-44a2-96ba-122c629cebaa.png",
+    "slim-storage-10": "hf_20260830_044125_6f1a872e-73f1-49ac-8b27-07076e6cf8c0.png",
+}
+
 TITLE_OVERRIDE = {
     "slim-storage-10": "コスパで選ぶ隙間ワゴン｜18cm4段なら最初の1台にちょうどいい",
     # 実際にリンクする商品が変わったため差し替え（TKUIN→山崎実業、耐荷重32kgの表記は削除）
@@ -362,7 +377,10 @@ CSS = """    *, *::before, *::after { box-sizing: border-box; margin: 0; padding
     }
     .card-img {
       width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; margin-bottom: 20px;
-      background: var(--bg); border: 1px dashed var(--line);
+      background: var(--bg); display: block; object-fit: cover;
+    }
+    div.card-img {
+      border: 1px dashed var(--line);
       display: flex; align-items: center; justify-content: center;
       color: var(--muted); font-size: .82rem; text-align: center; padding: 16px;
     }
@@ -400,6 +418,12 @@ def page(row):
     why = "\n".join(f"      <p>{p}</p>" for p in a["why"])
     fit = "\n".join(f"      <p>{p}</p>" for p in a["fit"])
     rent = "\n".join(f"      <p>{p}</p>" for p in a["rent"])
+    img = IMAGES.get(slug, "")
+    if img:
+        img_tag = (f'<img class="card-img" src="{IMAGE_BASE}{img}" '
+                   f'alt="{e(a["alt"])}" loading="lazy" width="1200" height="896">')
+    else:
+        img_tag = f'<div class="card-img">［ここに商品イメージ写真を入れる：{e(a["alt"])}］</div>'
     asin = ASINS.get(slug, "")
     if asin:
         href = f"https://www.amazon.co.jp/dp/{asin}?tag={TAG}"
@@ -446,7 +470,7 @@ def page(row):
       <article class="card">
         <div class="card-no">今回の1台</div>
         <h2>{e(a['card_h2'])}</h2>
-        <div class="card-img">［ここに商品イメージ写真を入れる：{e(a['alt'])}］</div>
+        {img_tag}
         <p>{a['card_body']}</p>
         <a class="btn" href="{href}" rel="nofollow sponsored" target="_blank">Amazonで詳細を見る&nbsp;&rarr;</a>
         <span class="btn-note">{btn_note}</span>

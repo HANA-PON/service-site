@@ -62,7 +62,10 @@
     }
     .card-img {
       width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; margin-bottom: 20px;
-      background: var(--bg); border: 1px dashed var(--line);
+      background: var(--bg); display: block; object-fit: cover;
+    }
+    div.card-img {
+      border: 1px dashed var(--line);
       display: flex; align-items: center; justify-content: center;
       color: var(--muted); font-size: .82rem; text-align: center; padding: 16px;
     }
@@ -117,7 +120,7 @@
       <article class="card">
         <div class="card-no">今回の1台</div>
         <h2>置いても、部屋がうるさくならない13cm</h2>
-        <div class="card-img">［ここに商品イメージ写真を入れる：白い本体に木の天板が付いたスリムワゴンがキッチンの細い隙間に収まっている様子］</div>
+        <img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3F96eeo9XAsKr1hKiGRAmYtuQcI/hf_20260830_043851_72b9d949-25d2-45c9-999c-3b523e073929.png" alt="白い本体に木の天板が付いたスリムワゴンがキッチンの細い隙間に収まっている様子" loading="lazy" width="1200" height="896">
         <p>白い本体に木の天板が乗った、幅13cmのスリムワゴン。収納を足しても視界の情報量が増えないので、狭い部屋ほど効きます。本体は完成品なので、届いたらキャスターを付けるだけで使えます。</p>
         <a class="btn" href="https://www.amazon.co.jp/dp/B07BGZZBFL?tag=slimstorage-22" rel="nofollow sponsored" target="_blank">Amazonで詳細を見る&nbsp;&rarr;</a>
         <span class="btn-note">サイズ・仕様は商品ページの最新の表記をご確認ください。</span>

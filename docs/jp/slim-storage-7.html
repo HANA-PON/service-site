@@ -62,7 +62,10 @@
     }
     .card-img {
       width: 100%; aspect-ratio: 4 / 3; border-radius: 4px; margin-bottom: 20px;
-      background: var(--bg); border: 1px dashed var(--line);
+      background: var(--bg); display: block; object-fit: cover;
+    }
+    div.card-img {
+      border: 1px dashed var(--line);
       display: flex; align-items: center; justify-content: center;
       color: var(--muted); font-size: .82rem; text-align: center; padding: 16px;
     }
@@ -117,7 +120,7 @@
       <article class="card">
         <div class="card-no">今回の1台</div>
         <h2>洗面台の「横」に、縦の置き場所を足す</h2>
-        <div class="card-img">［ここに商品イメージ写真を入れる：洗面台の横の細い隙間に収まった幅12cmのキャスター付きスリムワゴン］</div>
+        <img class="card-img" src="https://d8j0ntlcm91z4.cloudfront.net/user_3F96eeo9XAsKr1hKiGRAmYtuQcI/hf_20260830_043930_8b56e5a0-1b97-4d8d-b8ac-eba8f141be42.png" alt="洗面台の横の細い隙間に収まった幅12cmのキャスター付きスリムワゴン" loading="lazy" width="1200" height="896">
         <p>幅12cmのキャスター付きスリムワゴン。洗面台の脇に差し込んで、スキンケアやヘアケアを段ごとに分けられます。洗面台の上が空くので朝の動線が短くなり、引き出せるぶん掃除もしやすくなります。</p>
         <a class="btn" href="https://www.amazon.co.jp/dp/B0BCQ9GV7Z?tag=slimstorage-22" rel="nofollow sponsored" target="_blank">Amazonで詳細を見る&nbsp;&rarr;</a>
         <span class="btn-note">サイズ・仕様は商品ページの最新の表記をご確認ください。</span>
