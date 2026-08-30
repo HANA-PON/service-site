@@ -13,6 +13,20 @@ OUT = ROOT / "docs" / "jp"
 CSV = pathlib.Path(__file__).with_name("blog_10_articles.csv")
 
 SITE = "すきま収納ノート"
+TAG = "slimstorage-22"          # Amazonアソシエイト・ジャパンのトラッキングID
+# 記事スラッグ -> 実際にリンクする商品のASIN。空文字なら href="#" のまま出力する。
+ASINS = {
+    "slim-storage-1":  "B09WMXTWRR",   # SPACEKEEPER キッチンワゴン
+    "slim-storage-2":  "B07PFYZ3DP",   # 山崎実業 ハンドル付きスリムトイレラック W13
+    "slim-storage-3":  "B0GCHYZCRD",   # TORIBIO キッチンワゴン ローリングカート
+    "slim-storage-4":  "B0C4SK1FDR",   # アイリスオーヤマ 24cm 天板付きワゴン TLAW-B220
+    "slim-storage-5":  "B09J4KFYH9",   # ぼん家具 押入れ収納 約幅20cm
+    "slim-storage-6":  "B07BGZZBFL",   # 山崎実業 スリムワゴン W13xH80.5
+    "slim-storage-7":  "B0BX64K9J3",   # 山崎実業 洗面台まわり収納
+    "slim-storage-8":  "B012VR26ME",   # JEJ スリムチェスト SIU-5-WH
+    "slim-storage-9":  "B085F69484",   # 天馬 スキピタストッカースリム5段 17x140cm
+    "slim-storage-10": "B0CCRS8SV8",   # SVOHZAV スリムワゴン
+}
 VERIFY = "76b98bcf2847d663e1bc4067be4a20bd"   # Pinterest サイト認証（全ページ共通）
 DISCLOSURE = "Amazonのアソシエイトとして、適格販売により収入を得ています。このページには広告リンクが含まれます。"
 SOURCE_NOTE = ("このページは各メーカーの公表スペックと、狭い部屋に置くときの設置条件をもとに"
@@ -51,23 +65,25 @@ ARTICLES = {
   lead="トイレの横に空いた13cm。ここに何か置きたいけれど、ちょうどいい物が見つからない——そう思ったまま、"
        "何年か経っていませんか。",
   why=["13cmという幅は、収納用品の中でもかなり狭い部類です。選択肢が少ないうえに、"
-       "細いものは「倒れそう」「たわみそう」で結局買えません。",
-       "TKUIN の13cmモデルが選びやすいのは、耐荷重32kg（メーカー表記）をうたっている点です。"
-       "トイレットペーパーのストックや掃除用品はかさばる割に軽いので、"
-       "この耐荷重ならぐらつきを気にせず上まで詰められます。"],
+       "細いものは「倒れそう」「グラつきそう」で結局買えません。",
+       "この山崎実業のスリムトイレラックは、幅13cm・奥行47.5cm・高さ68cm（メーカー表記）。"
+       "奥行きを使って上に伸ばす形なので、狭い幅でもトイレットペーパーのストックがまとめて入ります。"
+       "ハンドルが付いていて引き出せるため、いちばん奥の物も取り出せます。"],
   fit=["トイレは、幅より<strong>奥行き</strong>で失敗します。便器のフチや配管が思ったより前に出ていて、"
        "壁にぴったり付けられないことがあるからです。壁から便器のいちばん出っ張った部分までを測って、"
-       "その中に奥行きが収まるか確認してください。",
-       "高さも一度見ておきます。タンクの上や窓枠にぶつかると、いちばん上の段が使えません。"
+       "奥行き47.5cmが収まるか確認してください。",
+       "高さも一度見ておきます。68cmはタンクより低いことが多いですが、"
+       "窓枠や手洗い管にぶつかると、いちばん上が使えません。"
        "「置ける高さ」ではなく「使える高さ」で考えるのがコツです。"],
   rent=["置くだけなので工事も穴あけも不要です。トイレは床が濡れやすいので、"
-        "キャスターや脚のサビが気になる場合は下に防水シートを敷いておくと長持ちします。",
+        "脚のサビが気になる場合は下に防水シートを敷いておくと長持ちします。",
         "扉が内開きのトイレでは、扉の可動範囲に入っていないかも確認してください。"
         "毎日ぶつかると、それだけで使わなくなります。"],
   card_h2="13cmでも、諦めなくていい",
-  card_body="トイレの便器横に差し込める細身のワゴン。メーカー表記で耐荷重32kgあるので、"
-            "ペーパーのストックや洗剤をまとめて置いても不安がありません。床に物を置かずに済むと、掃除が一気に楽になります。",
-  alt="トイレの便器横の細い隙間に収まった13cm幅のスリムワゴン",
+  card_body="トイレの便器横に差し込める、幅13cmのスリムラック。奥行きを使って縦に積めるので、"
+            "ペーパーのストックや洗剤がまとめて収まります。ハンドル付きで引き出せるため、奥の物も取り出せます。"
+            "床に物を置かずに済むと、掃除が一気に楽になります。",
+  alt="トイレの便器横の細い隙間に収まった13cm幅のスリムラック",
   outro="トイレの13cmは、家の中でいちばん見過ごされている収納スペースです。"
         "ここが片付くと、ストックの置き場所に悩む回数がぐっと減ります。"),
 
@@ -266,6 +282,17 @@ ARTICLES = {
 # 元データからの修正：価格を含むタイトルは規約（価格表記NG）に反するため差し替える。
 TITLE_OVERRIDE = {
     "slim-storage-10": "コスパで選ぶ隙間ワゴン｜18cm4段なら最初の1台にちょうどいい",
+    # 実際にリンクする商品が変わったため差し替え（TKUIN→山崎実業、耐荷重32kgの表記は削除）
+    "slim-storage-2": "トイレの隙間13cmを諦めない｜ハンドル付きスリムラックの収納力",
+}
+
+# CSVの h2_1（「〇〇を選んだ理由」）を、実際にリンクする商品に合わせて差し替える
+H2_OVERRIDE = {
+    "slim-storage-2": "13cm幅のトイレラックを選んだ理由",
+}
+
+PRODUCT_OVERRIDE = {
+    "slim-storage-2": "山崎実業 ハンドル付きスリムトイレラック 13cm",
 }
 
 CSS = """    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -361,7 +388,16 @@ def page(row):
     why = "\n".join(f"      <p>{p}</p>" for p in a["why"])
     fit = "\n".join(f"      <p>{p}</p>" for p in a["fit"])
     rent = "\n".join(f"      <p>{p}</p>" for p in a["rent"])
-    desc = f"{a['place']}の隙間に。{e(row['product'])}を、狭い部屋に置くときのサイズの測り方と賃貸での設置のコツからまとめました。"
+    asin = ASINS.get(slug, "")
+    if asin:
+        href = f"https://www.amazon.co.jp/dp/{asin}?tag={TAG}"
+        btn_note = "サイズ・仕様は商品ページの最新の表記をご確認ください。"
+    else:
+        href = "#"
+        btn_note = ("【ここにAmazonのアフィリリンクを貼る】<br>"
+                    f"SiteStripeで「{e(row['amazon_search'])}」を検索してリンクを取得してください。")
+    product = PRODUCT_OVERRIDE.get(slug, row["product"])
+    desc = f"{a['place']}の隙間に。{e(product)}を、狭い部屋に置くときのサイズの測り方と賃貸での設置のコツからまとめました。"
     return f"""<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -392,7 +428,7 @@ def page(row):
 
     <section class="body">
 
-      <h2>{e(row['h2_1'])}</h2>
+      <h2>{e(H2_OVERRIDE.get(slug, row['h2_1']))}</h2>
 {why}
 
       <article class="card">
@@ -400,9 +436,8 @@ def page(row):
         <h2>{e(a['card_h2'])}</h2>
         <div class="card-img">［ここに商品イメージ写真を入れる：{e(a['alt'])}］</div>
         <p>{a['card_body']}</p>
-        <a class="btn" href="#" rel="nofollow sponsored" target="_blank">Amazonで詳細を見る&nbsp;&rarr;</a>
-        <span class="btn-note">【ここにAmazonのアフィリリンクを貼る】<br>
-        SiteStripeで「{e(row['amazon_search'])}」を検索して短縮リンクを取得し、上の href="#" と差し替えてください。</span>
+        <a class="btn" href="{href}" rel="nofollow sponsored" target="_blank">Amazonで詳細を見る&nbsp;&rarr;</a>
+        <span class="btn-note">{btn_note}</span>
       </article>
 
       <h2>サイズの合わせ方｜買う前に測る3か所</h2>
